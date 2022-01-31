@@ -1,2 +1,1 @@
-# gotypes
-Go Type-First Development Snippets
+# Golang Type-First Development Snippets
