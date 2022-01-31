@@ -19,6 +19,7 @@ func TestFmapOverGenericOptionSomes(t *testing.T) {
 func TestFmapOverGenericOptionNones(t *testing.T) {
 	xs := []Option[int]{
 		None[int](),
+		Some(1),
 		None[int](),
 	}
 	for _, x := range xs {
