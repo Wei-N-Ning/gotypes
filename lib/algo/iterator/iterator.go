@@ -7,42 +7,12 @@ import (
 // Iterator is essentially a generic read-channel with behaviors.
 // The write-end of the channel must signal the termination by sending through a None value.
 type Iterator[T any] struct {
-	ch <-chan Option[T]
-}
-
-type Adaptor[T any, R any] struct {
-	inner <-chan Option[T]
-	ch    <-chan Option[R]
+	ch    <-chan Option[T]
+	inner interface{}
 }
 
 func (iter Iterator[T]) Next() Option[T] {
 	return <-iter.ch
-}
-
-// the implementation detail of Successor
-func successorImpl[T any](init Option[T], f func(T) Option[T]) <-chan Option[T] {
-	ch := make(chan Option[T])
-	go func() {
-		defer close(ch)
-		for {
-			ch <- init
-			if init.IsSome() {
-				init = f(init.Unwrap())
-			} else {
-				return
-			}
-		}
-	}()
-	return ch
-}
-
-// Successor is copycat of Rust's successor function.
-// It is an iterator-creator (or source).
-// It repeatedly applies f to init (an Option[T]), yielding the result, till init becomes None.
-// You can think of it as a series defined in the recursive form:
-// Pn+1 = F( Pn )
-func Successor[T any](init Option[T], f func(T) Option[T]) Iterator[T] {
-	return Iterator[T]{ch: successorImpl(init, f)}
 }
 
 // the implementation detail of Take
@@ -65,7 +35,7 @@ func takeImpl[T any](iter Iterator[T], num int) <-chan Option[T] {
 // The iterator can terminate before it reaches <num>.
 // It can be useful when dealing with an infinite series (Fibonacci series, the sequence of prime numbers, etc.)
 func (iter Iterator[T]) Take(num int) Iterator[T] {
-	return Iterator[T]{ch: takeImpl[T](iter, num)}
+	return Iterator[T]{ch: takeImpl[T](iter, num), inner: iter}
 }
 
 func repeatImpl[T any](x T) <-chan Option[T] {
@@ -118,7 +88,7 @@ func filterImpl[T any](iter Iterator[T], f func(T) bool) <-chan Option[T] {
 // Filter applies a function to each element and gets a boolean value.
 // If the value is true, the element is included in the resulting new iterator, otherwise it is discarded.
 func (iter Iterator[T]) Filter(f func(T) bool) Iterator[T] {
-	return Iterator[T]{ch: filterImpl(iter, f)}
+	return Iterator[T]{ch: filterImpl(iter, f), inner: iter}
 }
 
 // the implementation detail of Map
@@ -142,7 +112,7 @@ func mapImpl[T any, R any](iter Iterator[T], f func(T) R) <-chan Option[R] {
 // Map applies a function to each element and produces a new value;
 // The results are yield in the new iterator.
 func Map[T any, R any](iter Iterator[T], f func(T) R) Iterator[R] {
-	return Iterator[R]{ch: mapImpl(iter, f)}
+	return Iterator[R]{ch: mapImpl(iter, f), inner: iter}
 
 }
 
