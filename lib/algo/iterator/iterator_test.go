@@ -47,7 +47,7 @@ func TestRangeFilterCount(t *testing.T) {
 func TestRangeFilterFold(t *testing.T) {
 	iter := Range(1, 10)
 	iter_ := iter.Filter(func(x int) bool { return x%2 == 0 })
-	x := Fold[int, int](&iter_, 0, func(acc int, elem int) int {
+	x := Fold[int, int](iter_, 0, func(acc int, elem int) int {
 		return acc + elem
 	})
 	assert.Equal(t, 2+4+6+8, x)
@@ -55,7 +55,7 @@ func TestRangeFilterFold(t *testing.T) {
 
 func TestRangeMap(t *testing.T) {
 	iter := Range(1, 5)
-	iter_ := Map(&iter, func(x int) string {
+	iter_ := Map(iter, func(x int) string {
 		return fmt.Sprintf("%02d", x)
 	})
 	var xs []string

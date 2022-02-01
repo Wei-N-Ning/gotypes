@@ -10,7 +10,12 @@ type Iterator[T any] struct {
 	ch <-chan Option[T]
 }
 
-func (iter *Iterator[T]) Next() Option[T] {
+type Adaptor[T any, R any] struct {
+	inner <-chan Option[T]
+	ch    <-chan Option[R]
+}
+
+func (iter Iterator[T]) Next() Option[T] {
 	return <-iter.ch
 }
 
@@ -41,7 +46,7 @@ func Successor[T any](init Option[T], f func(T) Option[T]) Iterator[T] {
 }
 
 // the implementation detail of Take
-func takeImpl[T any](iter *Iterator[T], num int) <-chan Option[T] {
+func takeImpl[T any](iter Iterator[T], num int) <-chan Option[T] {
 	ch := make(chan Option[T])
 	go func() {
 		defer close(ch)
@@ -60,7 +65,7 @@ func takeImpl[T any](iter *Iterator[T], num int) <-chan Option[T] {
 // The iterator can terminate before it reaches <num>.
 // It can be useful when dealing with an infinite series (Fibonacci series, the sequence of prime numbers, etc.)
 func (iter Iterator[T]) Take(num int) Iterator[T] {
-	return Iterator[T]{ch: takeImpl[T](&iter, num)}
+	return Iterator[T]{ch: takeImpl[T](iter, num)}
 }
 
 func repeatImpl[T any](x T) <-chan Option[T] {
@@ -80,7 +85,7 @@ func Repeat[T any](x T) Iterator[T] {
 }
 
 // ForEach applies a function to each element and discard the result.
-func (iter *Iterator[T]) ForEach(f func(T)) {
+func (iter Iterator[T]) ForEach(f func(T)) {
 	for {
 		elem := iter.Next()
 		if elem.IsSome() {
@@ -92,7 +97,7 @@ func (iter *Iterator[T]) ForEach(f func(T)) {
 }
 
 // the implementation detail of Filter
-func filterImpl[T any](iter *Iterator[T], f func(T) bool) <-chan Option[T] {
+func filterImpl[T any](iter Iterator[T], f func(T) bool) <-chan Option[T] {
 	ch := make(chan Option[T])
 	go func() {
 		defer close(ch)
@@ -112,12 +117,12 @@ func filterImpl[T any](iter *Iterator[T], f func(T) bool) <-chan Option[T] {
 
 // Filter applies a function to each element and gets a boolean value.
 // If the value is true, the element is included in the resulting new iterator, otherwise it is discarded.
-func (iter *Iterator[T]) Filter(f func(T) bool) Iterator[T] {
+func (iter Iterator[T]) Filter(f func(T) bool) Iterator[T] {
 	return Iterator[T]{ch: filterImpl(iter, f)}
 }
 
 // the implementation detail of Map
-func mapImpl[T any, R any](iter *Iterator[T], f func(T) R) <-chan Option[R] {
+func mapImpl[T any, R any](iter Iterator[T], f func(T) R) <-chan Option[R] {
 	ch := make(chan Option[R])
 	go func() {
 		defer close(ch)
@@ -136,12 +141,12 @@ func mapImpl[T any, R any](iter *Iterator[T], f func(T) R) <-chan Option[R] {
 
 // Map applies a function to each element and produces a new value;
 // The results are yield in the new iterator.
-func Map[T any, R any](iter *Iterator[T], f func(T) R) Iterator[R] {
+func Map[T any, R any](iter Iterator[T], f func(T) R) Iterator[R] {
 	return Iterator[R]{ch: mapImpl(iter, f)}
 
 }
 
-func (iter *Iterator[T]) Count() int {
+func (iter Iterator[T]) Count() int {
 	num := 0
 	for {
 		elem := iter.Next()
@@ -158,7 +163,7 @@ func (iter *Iterator[T]) Count() int {
 // It takes each element out of the iterator, apply a computation `f func(_acc R, _elem T) R`
 // then update the init value;
 // When there is no more element to process, it returns the init value as the final result.
-func Fold[T any, R any](iter *Iterator[T], init R, f func(_acc R, _elem T) R) R {
+func Fold[T any, R any](iter Iterator[T], init R, f func(_acc R, _elem T) R) R {
 	for {
 		elem := iter.Next()
 		if elem.IsSome() {
