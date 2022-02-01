@@ -144,21 +144,3 @@ func Fold[T any, R any](iter Iterator[T], init R, f func(_acc R, _elem T) R) R {
 	}
 	return init
 }
-
-func rangeImpl(from int, to int) <-chan Option[int] {
-	ch := make(chan Option[int])
-	go func() {
-		defer close(ch)
-		for i := from; i < to; i++ {
-			ch <- Some[int](i)
-		}
-		ch <- None[int]()
-	}()
-	return ch
-}
-
-// Range is exclusive (same as Rust's from..to)
-// from=1, to=100 results in a sequence of (1, 2, ... 99), 99 elements
-func Range(from int, to int) Iterator[int] {
-	return Iterator[int]{ch: rangeImpl(from, to)}
-}
