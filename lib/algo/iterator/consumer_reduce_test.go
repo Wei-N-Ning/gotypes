@@ -1,6 +1,7 @@
 package iterator
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -32,4 +33,20 @@ func TestReduceTripleExpectValue(t *testing.T) {
 func TestReduceFromSliceExpectValue(t *testing.T) {
 	x := Reduce(FromSlice([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), 0, addTwo)
 	assert.Equal(t, (1+10)*10/2, x)
+}
+
+func TestReduceMiniPerf(t *testing.T) {
+	const DIFFICULTY = 34
+	ser := timeThis(func() {
+		Fold(RangeInclusive(1, 8), 0, func(x int, y int) int {
+			return fib(0*(x+y) + DIFFICULTY)
+		})
+	})
+	fmt.Println("serial", ser)
+	con := timeThis(func() {
+		Reduce(RangeInclusive(1, 8), 0, func(x int, y int) int {
+			return fib(0*(x+y) + DIFFICULTY)
+		})
+	})
+	fmt.Println("concur", con)
 }
