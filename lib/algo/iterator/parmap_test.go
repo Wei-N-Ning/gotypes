@@ -55,3 +55,23 @@ func TestParMapCompareRuntime(t *testing.T) {
 	fmt.Println("order ", parallelTime)
 	fmt.Println("unord ", parallelUnorderedTime)
 }
+
+func TestParMapReduceEmptyExpectInitValue(t *testing.T) {
+	x := ParMapReduce(Empty[int](), 101, func(x int) int { return x * 100 }, addTwo)
+	assert.Equal(t, 101, x)
+}
+
+func TestParMapReduceSingletonExpectValue(t *testing.T) {
+	x := ParMapReduce(FromSlice([]int{1}), 101, func(x int) int { return x * 100 }, addTwo)
+	assert.Equal(t, 201, x)
+}
+
+func TestParMapReducePairExpectValue(t *testing.T) {
+	x := ParMapReduce(FromSlice([]int{1, -1}), 101, func(x int) int { return x * 100 }, addTwo)
+	assert.Equal(t, 101, x)
+}
+
+func TestParMapReduceTripleExpectValue(t *testing.T) {
+	x := ParMapReduce(FromSlice([]int{1, -1, 100}), 101, func(x int) int { return x * 100 }, addTwo)
+	assert.Equal(t, 10101, x)
+}

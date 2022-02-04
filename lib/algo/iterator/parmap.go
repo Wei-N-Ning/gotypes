@@ -28,7 +28,7 @@ func ParMap[T, R any](iter Iterator[T], f func(x T) R) Iterator[R] {
 
 func parMapUnorderedImpl[T, R any](iter Iterator[T], f func(x T) R) <-chan Option[R] {
 	ch := make(chan Option[R], 1024)
-	aggregator := make(chan R)
+	aggregator := make(chan R, 1024)
 	go func() {
 		defer func() {
 			ch <- None[R]()
@@ -53,24 +53,35 @@ func ParMapUnord[T, R any](iter Iterator[T], f func(x T) R) Iterator[R] {
 	return Iterator[R]{ch: parMapUnorderedImpl(iter, f), inner: iter}
 }
 
-func parMapReduceImpl[T, R any](iter Iterator[T], init R, mapper func(x T) R, reducer func(R, R) R) R {
-	ch := make(chan Option[R], 1024)
-	aggregator := make(chan R)
-	go func() {
-		defer func() {
-			ch <- None[R]()
-			close(ch)
+func ParMapReduce[T, R any](iter Iterator[T], init R, mapper func(x T) R, reducer func(R, R) R) R {
+	aggregator := make(chan R, 1024)
+
+	// map
+
+	numTasks := 0
+	iter.ForEach(func(x T) {
+		go func() {
+			aggregator <- mapper(x)
 		}()
-		num := 0
-		iter.ForEach(func(x T) {
-			go func() {
-				aggregator <- mapper(x)
-			}()
-			num += 1
-		})
-		for i := 0; i < num; i++ {
-			ch <- Some[R](<-aggregator)
+		numTasks += 1
+	})
+
+	// reduce
+
+	for {
+		// the terminating condition
+		if numTasks == 0 {
+			break
 		}
-	}()
-	return ch
+		for i := 0; i < numTasks/2; i++ {
+			aggregator <- reducer(<-aggregator, <-aggregator)
+		}
+		if numTasks%2 == 1 {
+			// handle tail task
+			init = reducer(init, <-aggregator)
+		}
+		numTasks = numTasks / 2
+	}
+
+	return init
 }
