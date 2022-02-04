@@ -33,12 +33,11 @@ func Reduce[T any](iter Iterator[T], init T, f func(T, T) T) T {
 		if size == 0 {
 			break
 		}
-		aggregator := make(chan T, 1024)
 		for i := 0; i < size/2; i++ {
 			var first T = <-rw
 			var second T = <-rw
 			go func() {
-				aggregator <- f(first, second)
+				rw <- f(first, second)
 			}()
 		}
 		// handle the tail element
@@ -46,10 +45,6 @@ func Reduce[T any](iter Iterator[T], init T, f func(T, T) T) T {
 			init = f(init, <-rw)
 		}
 		size = size / 2
-		for i := 0; i < size; i++ {
-			rw <- <-aggregator
-		}
-		close(aggregator)
 	}
 	return init
 }
