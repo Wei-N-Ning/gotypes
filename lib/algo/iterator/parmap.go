@@ -5,7 +5,7 @@ import (
 )
 
 func parMapImpl[T, R any](iter Iterator[T], f func(x T) R) <-chan Option[R] {
-	ch := make(chan Option[R])
+	ch := make(chan Option[R], 1024)
 	outIter := Map(iter, func(x T) Iterator[R] {
 		return OnceWith(func() R { return f(x) })
 	})
@@ -27,7 +27,7 @@ func ParMap[T, R any](iter Iterator[T], f func(x T) R) Iterator[R] {
 }
 
 func parMapUnorderedImpl[T, R any](iter Iterator[T], f func(x T) R) <-chan Option[R] {
-	ch := make(chan Option[R])
+	ch := make(chan Option[R], 1024)
 	aggregator := make(chan R)
 	go func() {
 		defer func() {

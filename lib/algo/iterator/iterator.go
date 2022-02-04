@@ -14,3 +14,16 @@ type Iterator[T any] struct {
 func (iter Iterator[T]) Next() Option[T] {
 	return <-iter.ch
 }
+
+func (iter Iterator[T]) Tail() Iterator[T] {
+	iter.Next()
+	return iter
+}
+
+func (iter Iterator[T]) Last() Option[T] {
+	opt := None[T]()
+	iter.ForEach(func(x T) {
+		opt.Replace(x)
+	})
+	return opt
+}
