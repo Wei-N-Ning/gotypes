@@ -25,3 +25,5 @@ func takeImpl[T any](iter Iterator[T], num int) <-chan Option[T] {
 func (iter Iterator[T]) Take(num int) Iterator[T] {
 	return Iterator[T]{ch: takeImpl[T](iter, num), inner: iter}
 }
+
+// TakeWhile
