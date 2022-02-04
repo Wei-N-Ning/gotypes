@@ -75,3 +75,8 @@ func TestParMapReduceTripleExpectValue(t *testing.T) {
 	x := ParMapReduce(FromSlice([]int{1, -1, 100}), 101, func(x int) int { return x * 100 }, addTwo)
 	assert.Equal(t, 10101, x)
 }
+
+func TestParMapReduceRangeExpectValue(t *testing.T) {
+	x := ParMapReduce(Repeat(1).Take(100), 101, func(x int) int { return x * 1 }, addTwo)
+	assert.Equal(t, 201, x)
+}

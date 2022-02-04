@@ -54,16 +54,16 @@ func ParMapUnord[T, R any](iter Iterator[T], f func(x T) R) Iterator[R] {
 }
 
 func ParMapReduce[T, R any](iter Iterator[T], init R, mapper func(x T) R, reducer func(R, R) R) R {
-	aggregator := make(chan R, 1024)
+	rw := make(chan R, 1024)
 
 	// map
 
 	numTasks := 0
 	iter.ForEach(func(x T) {
-		go func() {
-			aggregator <- mapper(x)
-		}()
 		numTasks += 1
+		go func() {
+			rw <- mapper(x)
+		}()
 	})
 
 	// reduce
@@ -74,11 +74,15 @@ func ParMapReduce[T, R any](iter Iterator[T], init R, mapper func(x T) R, reduce
 			break
 		}
 		for i := 0; i < numTasks/2; i++ {
-			aggregator <- reducer(<-aggregator, <-aggregator)
+			first := <-rw
+			second := <-rw
+			go func() {
+				rw <- reducer(first, second)
+			}()
 		}
+		// handle tail task
 		if numTasks%2 == 1 {
-			// handle tail task
-			init = reducer(init, <-aggregator)
+			init = reducer(init, <-rw)
 		}
 		numTasks = numTasks / 2
 	}
