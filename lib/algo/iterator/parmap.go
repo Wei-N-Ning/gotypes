@@ -52,3 +52,25 @@ func parMapUnorderedImpl[T, R any](iter Iterator[T], f func(x T) R) <-chan Optio
 func ParMapUnord[T, R any](iter Iterator[T], f func(x T) R) Iterator[R] {
 	return Iterator[R]{ch: parMapUnorderedImpl(iter, f), inner: iter}
 }
+
+func parMapReduceImpl[T, R any](iter Iterator[T], init R, mapper func(x T) R, reducer func(R, R) R) R {
+	ch := make(chan Option[R], 1024)
+	aggregator := make(chan R)
+	go func() {
+		defer func() {
+			ch <- None[R]()
+			close(ch)
+		}()
+		num := 0
+		iter.ForEach(func(x T) {
+			go func() {
+				aggregator <- mapper(x)
+			}()
+			num += 1
+		})
+		for i := 0; i < num; i++ {
+			ch <- Some[R](<-aggregator)
+		}
+	}()
+	return ch
+}
