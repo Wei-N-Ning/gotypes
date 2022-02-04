@@ -1,11 +1,21 @@
 package option
 
+import "fmt"
+
 type Option[T any] struct {
 	x *T
 }
 
 func (opt Option[T]) IsSome() bool {
 	return opt.x != nil
+}
+
+func (opt Option[T]) ToString() string {
+	if opt.IsSome() {
+		return fmt.Sprintf("Some(%v)", opt.Unwrap())
+	} else {
+		return "None"
+	}
 }
 
 func (opt Option[T]) Unwrap() T {
