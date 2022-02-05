@@ -6,6 +6,6 @@ import (
 )
 
 func TestDirIterExpectFileCount(t *testing.T) {
-	num := DirIter("/tmp").Count()
+	num := DirIter("/var/tmp").Count()
 	assert.Greater(t, num, 1)
 }
