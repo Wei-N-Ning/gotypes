@@ -1,6 +1,8 @@
 package iterator
 
 import (
+	"github.com/stretchr/testify/assert"
+	"strings"
 	"testing"
 )
 
@@ -10,5 +12,8 @@ func TestFromMap(t *testing.T) {
 		"cre count": 10,
 		"code":      0xe1d1,
 	})
-	iter.Slice()
+	num := iter.CountIf(func(p Pair[string, int]) bool {
+		return strings.HasPrefix(p.First, "map")
+	})
+	assert.Equal(t, 1, num)
 }

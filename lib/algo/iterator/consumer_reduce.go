@@ -8,7 +8,7 @@ package iterator
 //    o       o
 //    ^^^^^^^^^
 //        o
-func Reduce[T any](iter Iterator[T], init T, f func(T, T) T) T {
+func (iter Iterator[T]) Reduce(init T, f func(T, T) T) T {
 	rw := make(chan T, 1024)
 	size := 0
 	// the first pass: to fill the tail-appender and figure out the size

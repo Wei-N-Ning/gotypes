@@ -29,5 +29,5 @@ func Map[T any, R any](iter Iterator[T], f func(T) R) Iterator[R] {
 }
 
 func MapReduce[T, R any](iter Iterator[T], init R, mapper func(x T) R, reducer func(R, R) R) R {
-	return Reduce(Map(iter, mapper), init, reducer)
+	return Map(iter, mapper).Reduce(init, reducer)
 }
