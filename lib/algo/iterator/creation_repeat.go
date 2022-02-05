@@ -19,3 +19,7 @@ func repeatImpl[T any](x T) <-chan Option[T] {
 func Repeat[T any](x T) Iterator[T] {
 	return Iterator[T]{ch: repeatImpl(x)}
 }
+
+func RepeatN[T any](x T, num int) Iterator[T] {
+	return Repeat(x).Take(num)
+}

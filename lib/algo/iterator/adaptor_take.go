@@ -27,3 +27,5 @@ func (iter Iterator[T]) Take(num int) Iterator[T] {
 }
 
 // TakeWhile
+// Skip
+// SkipWhile

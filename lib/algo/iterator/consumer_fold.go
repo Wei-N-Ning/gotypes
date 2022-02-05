@@ -15,3 +15,9 @@ func Fold[T any, R any](iter Iterator[T], init R, f func(_acc R, _elem T) R) R {
 	}
 	return init
 }
+
+// Scan
+// In the case of Scan() the state (init R) is mutable therefore the caller can model
+// logic that has side effect encapsulated in the mutable state
+// see the rust version:
+// https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.scan
