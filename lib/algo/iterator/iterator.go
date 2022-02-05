@@ -20,6 +20,17 @@ func (iter Iterator[T]) Tail() Iterator[T] {
 	return iter
 }
 
+// AdvanceBy advances the iterator position by <num> which is equivalent to
+// repeatedly calling Next() <num> times
+func (iter Iterator[T]) AdvanceBy(num int) Iterator[T] {
+	for i := 0; i < num; i++ {
+		if !iter.Next().IsSome() {
+			break
+		}
+	}
+	return iter
+}
+
 func (iter Iterator[T]) Last() Option[T] {
 	opt := None[T]()
 	iter.ForEach(func(x T) {

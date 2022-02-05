@@ -9,5 +9,5 @@ To stress test Golang's generic type system by implementing the basic monadic ty
 - type inference sometimes is broken (see the unit tests where I have to add the variable type hint)
 - cannot define type alias inside function (will treat the type parameter as index) - it is not a critical issue but
   makes the code cumbersome
-- Go doesn't first class tuple and pair types: `Tuple[T...], or Pair[T, P]`
+- Go doesn't have first class tuple and pair types: `Tuple[T...], or Pair[T, P]`
 - no variadic type parameter support (or I don't know?)

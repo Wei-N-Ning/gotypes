@@ -19,3 +19,13 @@ func TestLastExpectNone(t *testing.T) {
 
 	assert.False(t, FromSlice([]int{}).Last().IsSome())
 }
+
+func TestAdvanceByFromEmpty(t *testing.T) {
+	var ys []int = Empty[int]().AdvanceBy(10).Slice()
+	assert.Equal(t, 0, len(ys))
+}
+
+func TestAdvanceBy(t *testing.T) {
+	xs := FromSlice([]int{1, 2, 3, 4, 5, 6, 7, 8}).AdvanceBy(4).Slice()
+	assert.Equal(t, []int{5, 6, 7, 8}, xs)
+}
