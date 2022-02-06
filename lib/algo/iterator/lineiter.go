@@ -2,6 +2,7 @@ package iterator
 
 import (
 	"bufio"
+	"fmt"
 	. "go-types-nw/lib/algo/option"
 	"io"
 )
@@ -9,6 +10,10 @@ import (
 type Line struct {
 	Num   int
 	Value string
+}
+
+func (l *Line) ToString() string {
+	return fmt.Sprintf("%d: %s", l.Num, l.Value)
 }
 
 func Lines(reader io.Reader) Iterator[Line] {
