@@ -1,7 +1,8 @@
-package iterator
+package fs
 
 import (
 	"fmt"
+	"go-types-nw/lib/algo/iterator"
 	. "go-types-nw/lib/algo/option"
 	"io/fs"
 	"path/filepath"
@@ -12,24 +13,20 @@ type Item struct {
 	DirEntry fs.DirEntry
 }
 
-func dirIterImpl(dir string) <-chan Option[Item] {
-	ch := make(chan Option[Item])
+func DirIter(dir string) iterator.Iterator[Item] {
+	iter, writer := iterator.TailAppender[Item](1024)
 	go func() {
 		defer func() {
-			ch <- None[Item]()
-			close(ch)
+			writer <- None[Item]()
+			close(writer)
 		}()
 		err := filepath.WalkDir(dir, func(path string, d fs.DirEntry, err error) error {
-			ch <- Some(Item{Path: path, DirEntry: d})
+			writer <- Some(Item{Path: path, DirEntry: d})
 			return nil
 		})
 		if err != nil {
 			fmt.Println(err)
 		}
 	}()
-	return ch
-}
-
-func DirIter(dir string) Iterator[Item] {
-	return Iterator[Item]{ch: dirIterImpl(dir)}
+	return iter
 }

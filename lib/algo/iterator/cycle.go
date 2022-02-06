@@ -30,6 +30,8 @@ func cycleImpl[T any](iter Iterator[T]) <-chan Option[T] {
 	return ch
 }
 
+// Cycle creates an infinite sequence using the given iterator;
+// When it yields the last element from the original iterator, it repeats the sequence from the first element again.
 func (iter Iterator[T]) Cycle() Iterator[T] {
 	return Iterator[T]{ch: cycleImpl(iter), inner: iter}
 }

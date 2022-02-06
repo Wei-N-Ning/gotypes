@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"go-types-nw/lib/algo/iterator"
+	"go-types-nw/lib/algo/iterator/fs"
+	"go-types-nw/lib/algo/iterator/io"
 	"os"
 	"strings"
 )
@@ -46,7 +48,7 @@ func main() {
 	} else {
 		os.Exit(1)
 	}
-	x := iterator.ParMap(iterator.DirIter(dirPath), func(item iterator.Item) bool {
+	x := iterator.ParMap(fs.DirIter(dirPath), func(item fs.Item) bool {
 		if item.DirEntry.IsDir() && !strings.HasSuffix(item.Path, ".go") {
 			return false
 		}
@@ -60,7 +62,7 @@ func main() {
 		if err != nil {
 			return false
 		}
-		iterator.Lines(f).ForEach(func(line iterator.Line) {
+		io.Lines(f).ForEach(func(line io.Line) {
 			if strings.Contains(line.Value, pattern) {
 				fmt.Println(line.ToString())
 			}

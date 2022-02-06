@@ -4,12 +4,6 @@ import (
 	. "go-types-nw/lib/algo/option"
 )
 
-// given an iterator that yields:
-// 1, 2, 3, 4, 5 ...... n
-// given a chunk size of p
-// I get a new iterator that yields a slice of p elements (or less) from the original sequence:
-// (1, 2, 3 ... p), (p+1, ....), ...
-
 func chunkSliceImpl[T any](iter Iterator[T], size int) <-chan Option[[]T] {
 	ch := make(chan Option[[]T])
 	go func() {
@@ -38,6 +32,12 @@ func chunkSliceImpl[T any](iter Iterator[T], size int) <-chan Option[[]T] {
 	return ch
 }
 
+// ChunkSlice
+// given an iterator that yields:
+// 1, 2, 3, 4, 5 ...... n
+// given a chunk size of p
+// It produces a new iterator that yields a slice of p elements at a time (or less) from the original sequence:
+// (1, 2, 3 ... p), (p+1, .... p+p), ...
 func ChunkSlice[T any](iter Iterator[T], size int) Iterator[[]T] {
 	return Iterator[[]T]{ch: chunkSliceImpl(iter, size), inner: iter}
 }

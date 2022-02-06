@@ -1,8 +1,9 @@
-package iterator
+package io
 
 import (
 	"bufio"
 	"fmt"
+	"go-types-nw/lib/algo/iterator"
 	. "go-types-nw/lib/algo/option"
 	"io"
 )
@@ -16,8 +17,8 @@ func (l *Line) ToString() string {
 	return fmt.Sprintf("%d: %s", l.Num, l.Value)
 }
 
-func Lines(reader io.Reader) Iterator[Line] {
-	iter, writer := TailAppender[Line](1024)
+func Lines(reader io.Reader) iterator.Iterator[Line] {
+	iter, writer := iterator.TailAppender[Line](1024)
 	go func() {
 		defer func() {
 			writer <- None[Line]()

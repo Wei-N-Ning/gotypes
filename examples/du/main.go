@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"go-types-nw/lib/algo/iterator"
+	"go-types-nw/lib/algo/iterator/fs"
 	"os"
 )
 
@@ -10,7 +11,7 @@ func addTwo(lhs int64, rhs int64) int64 {
 	return lhs + rhs
 }
 
-func getSize(item iterator.Item) int64 {
+func getSize(item fs.Item) int64 {
 	if info, err := item.DirEntry.Info(); err != nil {
 		return 0
 	} else {
@@ -26,6 +27,6 @@ func main() {
 	}
 	// the ParMapUnordered version performs poorly (likely due to the overhead of channel)
 	// the computation is too trivial to benefit from parallelism
-	x := iterator.ParMapReduce(iterator.DirIter(dirPath), 0, getSize, addTwo)
+	x := iterator.ParMapReduce(fs.DirIter(dirPath), 0, getSize, addTwo)
 	fmt.Println(x/(1024*1024), "M")
 }

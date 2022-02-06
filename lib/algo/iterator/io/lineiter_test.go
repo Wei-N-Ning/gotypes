@@ -1,4 +1,4 @@
-package iterator
+package io
 
 import (
 	"github.com/stretchr/testify/assert"
