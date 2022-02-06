@@ -29,6 +29,7 @@ func partitionedImpl[T any](iter Iterator[T], f func(x T) bool) (<-chan Option[T
 // if the L channel is blocked on write, the R channel cannot make progress either
 // (can think of it as a dead lock);
 // they must be buffered channels
+// Should use select
 func Partitioned[T any](iter Iterator[T], f func(x T) bool) (Iterator[T], Iterator[T]) {
 	l, r := partitionedImpl(iter, f)
 	return Iterator[T]{ch: l, inner: iter}, Iterator[T]{ch: r, inner: iter}
