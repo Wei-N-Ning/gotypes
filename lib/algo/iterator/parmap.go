@@ -54,6 +54,8 @@ func ParMapUnord[T, R any](iter Iterator[T], f func(x T) R) Iterator[R] {
 }
 
 func ParMapReduce[T, R any](iter Iterator[T], init R, mapper func(x T) R, reducer func(R, R) R) R {
+	// the buffer size affects the creation time of the channel
+	// (e.g. if given math.MaxInt32, this statement can take a few hundred ms)
 	rw := make(chan R, 1024)
 
 	// map
