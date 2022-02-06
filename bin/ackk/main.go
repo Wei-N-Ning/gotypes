@@ -11,6 +11,8 @@ import (
 // There are a few things worth noting:
 // - this demo does not use Regex (cheating)
 // - the task of searching for pattern line-by-line from all the source files is IO-bound
+// - in production, ParMap (the ordered) version is probably more reasonable
+//   (hyperfine shows ParMap version performs equally well)
 // - the demo does not use any terminal output control like the real ack does (cheating)
 
 /*
@@ -44,7 +46,7 @@ func main() {
 	} else {
 		os.Exit(1)
 	}
-	x := iterator.ParMapUnord(iterator.DirIter(dirPath), func(item iterator.Item) bool {
+	x := iterator.ParMap(iterator.DirIter(dirPath), func(item iterator.Item) bool {
 		if item.DirEntry.IsDir() && !strings.HasSuffix(item.Path, ".go") {
 			return false
 		}
