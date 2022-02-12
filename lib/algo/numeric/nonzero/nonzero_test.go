@@ -21,3 +21,7 @@ func TestEnforceTypeCompliance(t *testing.T) {
 	assert.True(t, TryNewValue(0.0000001).IsSome())
 	assert.True(t, TryNewValue(-0.0000001).IsSome())
 }
+
+func TestAddExpectOptional(t *testing.T) {
+	assert.False(t, Add(UnsafeNewValue(-1), UnsafeNewValue(1)).IsSome())
+}
