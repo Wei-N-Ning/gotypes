@@ -13,7 +13,7 @@ func TestNonZeroExpectOptional(t *testing.T) {
 
 func TestEnforceTypeCompliance(t *testing.T) {
 	// compile error:
-	// string does not implement constraints.Float|constraints.Integer
+	// string does not implement typelevel.Float|typelevel.Integer
 	//val := TryNewValue("a")
 	//assert.False(t, val.IsSome())
 
