@@ -22,4 +22,7 @@ func TestCreateNewType(t *testing.T) {
 
 	assert.Equal(t, 2, y.Unwrap())
 	assert.Equal(t, 0, w)
+
+	k := DoubleGasFee(GasFee(1))
+	assert.Equal(t, 2, k.Unwrap())
 }

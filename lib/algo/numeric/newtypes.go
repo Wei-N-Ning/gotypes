@@ -20,6 +20,16 @@ func NewUncheck[T constraints.Float](x T) Fee[T] {
 
 type GasFee int
 
-func (gas *GasFee) Unwrap() int {
-	return int(*gas)
+type GasFeeTypeSet interface {
+	GasFee
+
+	Unwrap() int
+}
+
+func (gas GasFee) Unwrap() int {
+	return int(gas)
+}
+
+func DoubleGasFee[T GasFeeTypeSet](x T) GasFee {
+	return GasFee(int(x) * 2)
 }
