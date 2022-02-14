@@ -17,3 +17,9 @@ func (f Fee[T]) Unwrap() T {
 func NewUncheck[T constraints.Float](x T) Fee[T] {
 	return [1]T{x}
 }
+
+type GasFee int
+
+func (gas *GasFee) Unwrap() int {
+	return int(*gas)
+}
