@@ -5,6 +5,14 @@ package vector
 // it offers the method to reserve and shrink the memory it occupies, improving the
 // performance
 
+// note the Go type reference suggests: type Vector[T any] []T
+// this looks short and handy but has a few flaws:
+// - pop/try-pop is O(n) instead of O(1) (since I have to resort to slice manipulation)
+// - calling the "normal" functions such as len/append/cap etc. requires a type parameter
+// - the growth factor is not explicitly set
+
+const vectorGrowthFactor int = 2
+
 type Vector[T any] struct {
 	xs       []T
 	capacity int
@@ -28,4 +36,8 @@ func (vec *Vector[T]) grow(newCapacity int) {
 	copy(xs, vec.xs)
 	vec.xs = xs
 	vec.capacity = newCapacity
+}
+
+func (vec *Vector[T]) ToSlice() []T {
+	return vec.xs[:vec.size]
 }

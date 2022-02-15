@@ -5,7 +5,7 @@ import "go-types-nw/lib/algo/option"
 func (vec *Vector[T]) Push(x T) {
 	newSize := vec.size + 1
 	if newSize >= vec.capacity {
-		vec.grow(newSize * 2)
+		vec.grow(newSize * vectorGrowthFactor)
 	}
 	vec.size += 1
 	vec.xs[vec.size-1] = x
