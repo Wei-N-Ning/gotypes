@@ -31,11 +31,21 @@ func (vec *Vector[T]) Empty() bool {
 	return vec.size == 0
 }
 
-func (vec *Vector[T]) grow(newCapacity int) {
+func (vec *Vector[T]) Reserve(additional int) {
+	if additional > 0 {
+		vec.reallocate(vec.capacity + additional)
+	}
+}
+
+func (vec *Vector[T]) reallocate(newCapacity int) {
 	xs := make([]T, newCapacity)
 	copy(xs, vec.xs)
 	vec.xs = xs
 	vec.capacity = newCapacity
+}
+
+func (vec *Vector[T]) ShrinkToFit() {
+	vec.reallocate(vec.size)
 }
 
 func (vec *Vector[T]) ToSlice() []T {
