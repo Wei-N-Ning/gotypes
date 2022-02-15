@@ -1,4 +1,4 @@
-package graphs
+package trees
 
 import (
 	"github.com/stretchr/testify/assert"

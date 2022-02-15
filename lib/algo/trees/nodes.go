@@ -1,4 +1,4 @@
-package graphs
+package trees
 
 type Node[T any] struct {
 	val      T
