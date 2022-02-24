@@ -1,7 +1,7 @@
 package iterator
 
 import (
-	. "go-types-nw/lib/algo/option"
+	. "github.com/Wei-N-Ning/gotypes/lib/algo/option"
 )
 
 func flatMapImpl[T, R any](iter Iterator[T], mapper func(x T) Iterator[R]) <-chan Option[R] {

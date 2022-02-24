@@ -2,8 +2,8 @@ package fs
 
 import (
 	"fmt"
-	"go-types-nw/lib/algo/iterator"
-	. "go-types-nw/lib/algo/option"
+	"github.com/Wei-N-Ning/gotypes/lib/algo/iterator"
+	. "github.com/Wei-N-Ning/gotypes/lib/algo/option"
 	"io/fs"
 	"path/filepath"
 )

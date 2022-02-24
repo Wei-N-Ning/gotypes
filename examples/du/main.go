@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"go-types-nw/lib/algo/iterator"
-	"go-types-nw/lib/algo/iterator/fs"
+	"github.com/Wei-N-Ning/gotypes/lib/algo/iterator"
+	"github.com/Wei-N-Ning/gotypes/lib/algo/iterator/fs"
 	"os"
 )
 

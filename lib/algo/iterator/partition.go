@@ -1,7 +1,7 @@
 package iterator
 
 import (
-	. "go-types-nw/lib/algo/option"
+	. "github.com/Wei-N-Ning/gotypes/lib/algo/option"
 )
 
 func partitionedImpl[T any](iter Iterator[T], f func(x T) bool) (<-chan Option[T], <-chan Option[T]) {

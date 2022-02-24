@@ -1,4 +1,4 @@
-module go-types-nw
+module github.com/Wei-N-Ning/gotypes
 
 go 1.18
 

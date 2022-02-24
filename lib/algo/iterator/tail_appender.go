@@ -1,7 +1,7 @@
 package iterator
 
 import (
-	. "go-types-nw/lib/algo/option"
+	. "github.com/Wei-N-Ning/gotypes/lib/algo/option"
 )
 
 func TailAppender[T any](buffer int64) (Iterator[T], chan<- Option[T]) {

@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"go-types-nw/lib/algo/iterator"
-	"go-types-nw/lib/algo/iterator/fs"
-	"go-types-nw/lib/algo/iterator/io"
+	"github.com/Wei-N-Ning/gotypes/lib/algo/iterator"
+	"github.com/Wei-N-Ning/gotypes/lib/algo/iterator/fs"
+	"github.com/Wei-N-Ning/gotypes/lib/algo/iterator/io"
 	"os"
 	"strings"
 )

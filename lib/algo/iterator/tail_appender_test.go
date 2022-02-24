@@ -2,7 +2,7 @@ package iterator
 
 import (
 	"github.com/stretchr/testify/assert"
-	. "go-types-nw/lib/algo/option"
+	. "github.com/Wei-N-Ning/gotypes/lib/algo/option"
 	"testing"
 )
 

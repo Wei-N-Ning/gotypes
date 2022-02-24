@@ -1,7 +1,7 @@
 package nonzero
 
 import "constraints"
-import "go-types-nw/lib/algo/option"
+import "github.com/Wei-N-Ning/gotypes/lib/algo/option"
 
 // NonZero a newtype that ensures the value encapsulated is not zero;
 // the value encapsulated can be off integer or float

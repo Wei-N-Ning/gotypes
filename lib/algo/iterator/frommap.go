@@ -1,7 +1,7 @@
 package iterator
 
 import (
-	. "go-types-nw/lib/algo/option"
+	. "github.com/Wei-N-Ning/gotypes/lib/algo/option"
 )
 
 func fromMapImpl[K comparable, V any](m map[K]V) <-chan Option[Pair[K, V]] {

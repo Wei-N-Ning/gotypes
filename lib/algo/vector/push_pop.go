@@ -1,6 +1,6 @@
 package vector
 
-import "go-types-nw/lib/algo/option"
+import "github.com/Wei-N-Ning/gotypes/lib/algo/option"
 
 func (vec *Vector[T]) Push(x T) {
 	newSize := vec.size + 1
