@@ -1,6 +1,6 @@
-# Golang Monadic Types
+# Golang Generic Collections
 
-To stress test Golang's generic type system by implementing the basic monadic types (maybe/option, either, vector, etc.)
+See the [objectives page](./docs/objectives.md).
 
 ## Limitation
 
