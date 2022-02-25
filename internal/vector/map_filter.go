@@ -4,7 +4,7 @@ import (
 	"github.com/Wei-N-Ning/gotypes/pkg/option"
 )
 
-func MapFilter[T any, R any](vec *Vector[T], f func(T) option.Option[R]) *Vector[R] {
+func MapFilter[T any, R any](vec Vector[T], f func(T) option.Option[R]) Vector[R] {
 	newVec := WithCapacity[R](vec.Capacity())
 	newIdx := 0
 	for idx := 0; idx < vec.size; idx++ {
