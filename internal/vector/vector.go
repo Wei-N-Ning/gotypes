@@ -51,6 +51,6 @@ func (vec *Vector[T]) ShrinkToFit() {
 	vec.reallocate(vec.size)
 }
 
-func (vec *Vector[T]) ToSlice() []T {
+func (vec Vector[T]) ToSlice() []T {
 	return vec.xs[:vec.size]
 }
