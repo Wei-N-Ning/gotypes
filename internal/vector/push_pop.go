@@ -5,9 +5,8 @@ import (
 )
 
 func (vec *Vector[T]) Push(x T) {
-	newSize := vec.size + 1
-	if newSize >= vec.capacity {
-		vec.reallocate(newSize * vectorGrowthFactor)
+	if (vec.size + 1) > vec.capacity {
+		vec.reallocate((vec.size + 1) * vectorGrowthFactor)
 	}
 	vec.size += 1
 	vec.xs[vec.size-1] = x

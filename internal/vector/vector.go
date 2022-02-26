@@ -38,6 +38,9 @@ func (vec *Vector[T]) Reserve(additional int) {
 }
 
 func (vec *Vector[T]) reallocate(newCapacity int) {
+	if newCapacity <= vec.capacity {
+		return
+	}
 	xs := make([]T, newCapacity)
 	copy(xs, vec.xs)
 	vec.xs = xs

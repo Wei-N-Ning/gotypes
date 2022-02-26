@@ -18,9 +18,9 @@ func TestPushExpectCapacityGrowth(t *testing.T) {
 	vec.Push("a")
 	assert.Equal(t, 2, vec.Capacity())
 	vec.Push("b")
-	assert.Equal(t, 4, vec.Capacity())
+	assert.Equal(t, 2, vec.Capacity())
 	vec.Push("c")
-	assert.Equal(t, 4, vec.Capacity())
+	assert.Equal(t, 6, vec.Capacity())
 
 	v2 := WithCapacity[string](16)
 	v2.Push("a")
