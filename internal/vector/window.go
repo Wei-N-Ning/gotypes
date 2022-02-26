@@ -14,8 +14,11 @@ func Window[T any](vec Vector[T], size int) (Vector[*Vector[T]], error) {
 	for i := 0; i < vec.Size(); i++ {
 		window := WithCapacity[T](size)
 		out.Push(&window)
-		for j := i; j < min(vec.Size(), j+size); j++ {
-			window.Push(vec.xs[j])
+		for j := 0; j < size; j++ {
+			if i+j >= vec.Size() {
+				return out, nil
+			}
+			window.Push(vec.xs[i+j])
 		}
 		if i+size >= vec.Size() {
 			break
