@@ -1,6 +1,6 @@
 package numeric
 
-import "constraints"
+import "golang.org/x/exp/constraints"
 
 // source: https://go.googlesource.com/proposal/+/refs/heads/master/design/43651-type-parameters.md
 // generic types can have methods

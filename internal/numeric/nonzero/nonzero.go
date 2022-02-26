@@ -1,8 +1,8 @@
 package nonzero
 
 import (
-	"constraints"
 	"github.com/Wei-N-Ning/gotypes/pkg/option"
+	"golang.org/x/exp/constraints"
 )
 
 // NonZero a newtype that ensures the value encapsulated is not zero;
