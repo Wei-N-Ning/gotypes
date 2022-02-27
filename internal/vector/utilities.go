@@ -9,3 +9,11 @@ func min[T constraints.Ordered](lhs T, rhs T) T {
 		return rhs
 	}
 }
+
+func max[T constraints.Ordered](lhs T, rhs T) T {
+	if lhs > rhs {
+		return lhs
+	} else {
+		return rhs
+	}
+}
