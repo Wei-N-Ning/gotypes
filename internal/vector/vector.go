@@ -54,3 +54,15 @@ func (vec *Vector[T]) ShrinkToFit() {
 func (vec Vector[T]) ToSlice() []T {
 	return vec.xs[:vec.size]
 }
+
+// Get does not perform boundary check
+func (vec *Vector[T]) Get(i int) T {
+	return vec.xs[i]
+}
+
+// Swap does not perform boundary check
+func (vec *Vector[T]) Swap(i int, j int) {
+	tmp := vec.Get(i)
+	vec.xs[i] = vec.xs[j]
+	vec.xs[j] = tmp
+}
