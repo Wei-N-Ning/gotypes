@@ -11,3 +11,17 @@ func (iter Iterator[T]) ForEach(f func(T)) {
 		}
 	}
 }
+
+// ForEachWithIndex adds the element index for the caller's convenience;
+func (iter Iterator[T]) ForEachWithIndex(f func(int, T)) {
+	idx := 0
+	for {
+		elem := iter.Next()
+		if elem.IsSome() {
+			f(idx, elem.Unwrap())
+			idx += 1
+		} else {
+			return
+		}
+	}
+}
