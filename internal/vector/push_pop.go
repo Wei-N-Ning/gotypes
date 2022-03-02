@@ -20,3 +20,10 @@ func (vec *Vector[T]) TryPop() option.Option[T] {
 	vec.size -= 1
 	return option.Some(x)
 }
+
+// Pop will panic if the vector is empty
+func (vec *Vector[T]) Pop() T {
+	x := vec.xs[vec.size-1]
+	vec.size -= 1
+	return x
+}

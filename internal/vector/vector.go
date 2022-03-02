@@ -66,3 +66,18 @@ func (vec *Vector[T]) Swap(i int, j int) {
 	vec.xs[i] = vec.xs[j]
 	vec.xs[j] = tmp
 }
+
+// ResetSize resets the vector size to 0 (effectively making all the elements unavailable)
+// It will not cause deallocation (i.e., it is faster than deallocation, aka Clear())
+// To trigger the deletion of all the elements (GC), use Clear()
+func (vec *Vector[T]) ResetSize() {
+	vec.size = 0
+}
+
+// Clear deallocate all the elements and reset the vector size to 0;
+// Slower than ResetSize, but sometimes can be the desirable option.
+func (vec *Vector[T]) Clear() {
+	xs := make([]T, vec.capacity)
+	vec.xs = xs
+	vec.size = 0
+}

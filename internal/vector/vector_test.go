@@ -20,3 +20,23 @@ func TestToSlice(t *testing.T) {
 	})
 
 }
+
+func TestResetSize(t *testing.T) {
+	t.Run("ensure empty", func(t *testing.T) {
+		v := FromValues(1, 2, 3, 4)
+		assert.False(t, v.Empty())
+		assert.GreaterOrEqual(t, v.Capacity(), 4)
+		v.ResetSize()
+		assert.True(t, v.Empty())
+		assert.Equal(t, []int{}, v.ToSlice())
+		assert.GreaterOrEqual(t, v.Capacity(), 4)
+	})
+}
+
+func TestClear(t *testing.T) {
+	t.Run("ensure elements are gone", func(t *testing.T) {
+		v := FromValues(1, 2, 3, 4)
+		v.Clear()
+		assert.Equal(t, []int{}, v.ToSlice())
+	})
+}
