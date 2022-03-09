@@ -60,6 +60,16 @@ func (vec *Vector[T]) Get(i int) T {
 	return vec.xs[i]
 }
 
+// Set does not perform boundary check
+func (vec *Vector[T]) Set(i int, x T) {
+	vec.xs[i] = x
+}
+
+// Back does not perform boundary check
+func (vec *Vector[T]) Back() T {
+	return vec.xs[vec.size-1]
+}
+
 // Swap does not perform boundary check
 func (vec *Vector[T]) Swap(i int, j int) {
 	tmp := vec.Get(i)
