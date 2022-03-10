@@ -1,5 +1,7 @@
 package enum
 
+// to demonstrate the difference between interface-for-behavior and interface-for-typeset
+
 // Renderable defines the behavior
 type Renderable interface {
 	Render()
