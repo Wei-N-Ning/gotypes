@@ -19,5 +19,10 @@ func main() {
 		BadStatefulServer{}.serve(store, requests)
 	})
 
+	store = Spinup(5, 20)
+	timeThis("ok-stateful-function", baseline, func() {
+		OkStatefulServer{}.serve(store, requests)
+	})
+
 	store.Teardown()
 }

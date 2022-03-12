@@ -58,6 +58,14 @@ func (store *Store) Upsert(word string) {
 	store.saveState(st)
 }
 
+func (store *Store) BatchUpsert(stDelta state) {
+	st := store.getState()
+	for word, x := range stDelta {
+		st[word] += x
+	}
+	store.saveState(st)
+}
+
 func (store *Store) Read(word string) int {
 	return store.getState()[word]
 }
