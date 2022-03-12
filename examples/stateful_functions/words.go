@@ -2,27 +2,26 @@ package main
 
 import "math/rand"
 
-var Scale int = 1
-
 var DefaultCountByWord = map[string]int{
-	"there":   3 * Scale,
-	"is":      4 * Scale,
-	"a":       5 * Scale,
-	"silence": 6 * Scale,
-	"where":   7 * Scale,
-	"hath":    8 * Scale,
-	"been":    9 * Scale,
-	"no":      2 * Scale,
-	"sound":   2 * Scale,
+	"there":   3,
+	"is":      4,
+	"a":       5,
+	"silence": 6,
+	"where":   7,
+	"hath":    8,
+	"been":    9,
+	"no":      2,
+	"sound":   2,
 }
 
-func GenerateDefaultWordSet() []string {
-	return generateWordSet(DefaultCountByWord)
+func GenerateDefaultWordSet(scale int) []string {
+	return generateWordSet(DefaultCountByWord, scale)
 }
 
-func generateWordSet(countByWords map[string]int) []string {
+func generateWordSet(countByWords map[string]int, scale int) []string {
 	var ws []string
 	for word, x := range countByWords {
+		x *= scale
 		xs := make([]string, x)
 		for i := 0; i < x; i++ {
 			xs[i] = word
