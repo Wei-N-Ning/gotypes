@@ -36,7 +36,7 @@ func TestReduceFromSliceExpectValue(t *testing.T) {
 }
 
 func TestReduceMiniPerf(t *testing.T) {
-	const DIFFICULTY = 34
+	const DIFFICULTY = 30
 	ser := timeThis(func() {
 		Fold(RangeInclusive(1, 8), 0, func(x int, y int) int {
 			return fib(0*(x+y) + DIFFICULTY)
