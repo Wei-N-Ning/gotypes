@@ -4,14 +4,16 @@ import "github.com/Wei-N-Ning/gotypes/pkg/iterator"
 
 type OkStatefulServer struct{}
 
+const MergeTicks = 4
+
 func (_ OkStatefulServer) serve(store *Store, requests []Request) {
 	iter := iterator.FromSlice(requests)
-	workers := iterator.ChunkSlice(iter, NumWorkers)
+	requestsPerWorker := iterator.ChunkSlice(iter, NumWorkers)
 
-	iterator.ParMapUnord(workers, func(reqs []Request) error {
+	iterator.ParMapUnord(requestsPerWorker, func(reqs []Request) error {
 		localState := map[string]int{}
 		for idx, req := range reqs {
-			if idx > 0 && idx%30 == 0 {
+			if idx > 0 && idx%MergeTicks == 0 {
 				store.BatchUpsert(localState)
 			}
 			if req.action == "WRITE" {
