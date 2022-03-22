@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/Wei-N-Ning/gotypes/pkg/iterator"
 	"github.com/Wei-N-Ning/gotypes/pkg/iterator/fs"
 	"io"
 	"os"
@@ -78,7 +79,7 @@ func main() {
 		//}).Reduce(0, addTwo)
 
 		// Parallel-map-reduce
-		//x = iterator.ParMapReduce(fs.DirIter(dirPath), 0, getSize, addTwo)
+		x = iterator.ParMapReduce(fs.DirIter(dirPath), 0, getSize, addTwo)
 
 		// ----------- round 2: slow IO --------------
 
