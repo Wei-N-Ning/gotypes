@@ -92,9 +92,9 @@ func main() {
 		//x = iterator.MapReduce(fs.DirIter(dirPath), 0, getSizeSlow, addTwo)
 
 		// Parallel-map
-		x = iterator.ParMap(fs.DirIter(dirPath), func(item fs.Item) int64 {
-			return getSizeSlow(item)
-		}).Reduce(0, addTwo)
+		//x = iterator.ParMap(fs.DirIter(dirPath), func(item fs.Item) int64 {
+		//	return getSizeSlow(item)
+		//}).Reduce(0, addTwo)
 
 		// Parallel-unordered-map
 		//x = iterator.ParMapUnord(fs.DirIter(dirPath), func(item fs.Item) int64 {
@@ -102,7 +102,7 @@ func main() {
 		//}).Reduce(0, addTwo)
 
 		// Parallel-map-reduce
-		//x = iterator.ParMapReduce(fs.DirIter(dirPath), 0, getSizeSlow, addTwo)
+		x = iterator.ParMapReduce(fs.DirIter(dirPath), 0, getSizeSlow, addTwo)
 
 	}()
 
