@@ -1,1 +1,4 @@
 trace.out
+!images/
+images/*
+!images/create-images.sh
