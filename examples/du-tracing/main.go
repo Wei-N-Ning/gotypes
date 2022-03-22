@@ -29,7 +29,7 @@ func getSizeSlow(item fs.Item) int64 {
 		if err != nil {
 			return 0
 		}
-		bs := make([]byte, 16)
+		bs := make([]byte, 128)
 		totalRead := 0
 		for {
 			numRead, err := r.Read(bs)
@@ -79,9 +79,30 @@ func main() {
 		//}).Reduce(0, addTwo)
 
 		// Parallel-map-reduce
-		x = iterator.ParMapReduce(fs.DirIter(dirPath), 0, getSize, addTwo)
+		//x = iterator.ParMapReduce(fs.DirIter(dirPath), 0, getSize, addTwo)
 
 		// ----------- round 2: slow IO --------------
+
+		// serial-for-each
+		//fs.DirIter(dirPath).ForEach(func(item fs.Item) {
+		//	x += getSizeSlow(item)
+		//})
+
+		// serial-map-reduce
+		//x = iterator.MapReduce(fs.DirIter(dirPath), 0, getSizeSlow, addTwo)
+
+		// Parallel-map
+		x = iterator.ParMap(fs.DirIter(dirPath), func(item fs.Item) int64 {
+			return getSizeSlow(item)
+		}).Reduce(0, addTwo)
+
+		// Parallel-unordered-map
+		//x = iterator.ParMapUnord(fs.DirIter(dirPath), func(item fs.Item) int64 {
+		//	return getSizeSlow(item)
+		//}).Reduce(0, addTwo)
+
+		// Parallel-map-reduce
+		//x = iterator.ParMapReduce(fs.DirIter(dirPath), 0, getSizeSlow, addTwo)
 
 	}()
 
