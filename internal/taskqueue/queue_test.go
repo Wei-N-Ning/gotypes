@@ -81,3 +81,9 @@ func TestConcurrentTaskExecution(t *testing.T) {
 		fmt.Println(ys)
 	})
 }
+
+func TestBlockingTask(t *testing.T) {
+	t.Run("one task can block Dequeue() but not the other task executions", func(t *testing.T) {
+		// TODO
+	})
+}
