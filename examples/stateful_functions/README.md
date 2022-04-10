@@ -2,6 +2,8 @@
 
 inspired by Apache Flink
 
+stateful function shows how the iterator framework can help to build more advanced tooling.
+
 ## Example breakdown
 
 ### Serial baseline
