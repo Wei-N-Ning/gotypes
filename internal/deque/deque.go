@@ -1,6 +1,8 @@
 package deque
 
-import "github.com/Wei-N-Ning/gotypes/internal/vector"
+import (
+	"github.com/Wei-N-Ning/gotypes/pkg/vector"
+)
 
 type Deque[T any] struct {
 	xs   vector.Vector[T]
