@@ -1,11 +1,12 @@
 package vector
 
 import (
-	"github.com/Wei-N-Ning/gotypes/pkg/option"
-	"github.com/stretchr/testify/assert"
 	"path"
 	"strings"
 	"testing"
+
+	"github.com/Wei-N-Ning/gotypes/pkg/option"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestExpectElementsFiltered(t *testing.T) {

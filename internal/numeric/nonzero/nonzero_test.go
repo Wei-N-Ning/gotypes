@@ -1,8 +1,9 @@
 package nonzero
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestNonZeroExpectOptional(t *testing.T) {
@@ -14,8 +15,8 @@ func TestNonZeroExpectOptional(t *testing.T) {
 func TestEnforceTypeCompliance(t *testing.T) {
 	// compile error:
 	// string does not implement typelevel.Float|typelevel.Integer
-	//val := TryNewValue("a")
-	//assert.False(t, val.IsSome())
+	// val := TryNewValue("a")
+	// assert.False(t, val.IsSome())
 
 	assert.False(t, TryNewValue(0.0).IsSome())
 	assert.True(t, TryNewValue(0.0000001).IsSome())

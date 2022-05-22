@@ -1,9 +1,10 @@
 package vector
 
 import (
+	"sort"
+
 	"golang.org/x/exp/constraints"
 	"golang.org/x/exp/slices"
-	"sort"
 )
 
 func Sort[T constraints.Ordered](vec *Vector[T]) {

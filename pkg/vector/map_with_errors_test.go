@@ -2,8 +2,9 @@ package vector
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestAllSucceeds(t *testing.T) {

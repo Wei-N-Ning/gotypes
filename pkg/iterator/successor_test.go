@@ -1,9 +1,10 @@
 package iterator
 
 import (
+	"testing"
+
 	. "github.com/Wei-N-Ning/gotypes/pkg/option"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestFibonacciNumberSeries(t *testing.T) {

@@ -3,9 +3,10 @@ package io
 import (
 	"bufio"
 	"fmt"
-	iterator2 "github.com/Wei-N-Ning/gotypes/pkg/iterator"
-	. "github.com/Wei-N-Ning/gotypes/pkg/option"
 	"io"
+
+	"github.com/Wei-N-Ning/gotypes/pkg/iterator"
+	. "github.com/Wei-N-Ning/gotypes/pkg/option"
 )
 
 type Line struct {
@@ -17,8 +18,8 @@ func (l *Line) ToString() string {
 	return fmt.Sprintf("%d: %s", l.Num, l.Value)
 }
 
-func Lines(reader io.Reader) iterator2.Iterator[Line] {
-	iter, writer := iterator2.TailAppender[Line](1024)
+func Lines(reader io.Reader) iterator.Iterator[Line] {
+	iter, writer := iterator.TailAppender[Line](1024)
 	go func() {
 		defer func() {
 			writer <- None[Line]()

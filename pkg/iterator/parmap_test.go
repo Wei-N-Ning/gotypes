@@ -2,9 +2,10 @@ package iterator
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"runtime"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestParMapExpectLaziness(t *testing.T) {

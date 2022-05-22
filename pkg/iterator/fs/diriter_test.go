@@ -1,8 +1,9 @@
 package fs
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestDirIterExpectFileCount(t *testing.T) {

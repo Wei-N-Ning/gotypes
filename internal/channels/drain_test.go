@@ -1,9 +1,10 @@
 package channels
 
 import (
+	"testing"
+
 	"github.com/Wei-N-Ning/gotypes/pkg/iterator"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 // drain a channel:

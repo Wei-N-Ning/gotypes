@@ -1,9 +1,10 @@
 package io
 
 import (
-	"github.com/stretchr/testify/assert"
 	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGivenEmptyReaderExpectEmptyLineIterator(t *testing.T) {

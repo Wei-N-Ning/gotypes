@@ -1,8 +1,9 @@
 package iterator
 
 import (
-	"github.com/Wei-N-Ning/gotypes/pkg/option"
 	"sync"
+
+	"github.com/Wei-N-Ning/gotypes/pkg/option"
 )
 
 // see:

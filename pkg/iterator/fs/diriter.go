@@ -2,10 +2,11 @@ package fs
 
 import (
 	"fmt"
-	iterator2 "github.com/Wei-N-Ning/gotypes/pkg/iterator"
-	. "github.com/Wei-N-Ning/gotypes/pkg/option"
 	"io/fs"
 	"path/filepath"
+
+	"github.com/Wei-N-Ning/gotypes/pkg/iterator"
+	. "github.com/Wei-N-Ning/gotypes/pkg/option"
 )
 
 type Item struct {
@@ -13,8 +14,8 @@ type Item struct {
 	DirEntry fs.DirEntry
 }
 
-func DirIter(dir string) iterator2.Iterator[Item] {
-	iter, writer := iterator2.TailAppender[Item](1024)
+func DirIter(dir string) iterator.Iterator[Item] {
+	iter, writer := iterator.TailAppender[Item](1024)
 	go func() {
 		defer func() {
 			writer <- None[Item]()

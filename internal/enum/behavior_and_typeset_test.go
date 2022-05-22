@@ -26,5 +26,5 @@ func TestBehaviorPolymorphism(t *testing.T) {
 
 	// Collection is not in the typeset! Hence it won't compile.
 	// Collection does not implement SceneObject
-	//ScreenSpaceOcclusion(Collection{xs: []Renderable{}})
+	// ScreenSpaceOcclusion(Collection{xs: []Renderable{}})
 }

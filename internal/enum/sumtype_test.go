@@ -1,8 +1,9 @@
 package enum
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestSumtypeConstraint(t *testing.T) {
@@ -12,5 +13,5 @@ func TestSumtypeConstraint(t *testing.T) {
 	assert.Equal(t, 4, ErrorCode(InternalError{}))
 
 	// won't compile: error does not implement ProdError
-	//ErrorCode(fmt.Errorf("won't work"))
+	// ErrorCode(fmt.Errorf("won't work"))
 }

@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"strings"
+
 	"github.com/Wei-N-Ning/gotypes/pkg/iterator"
 	"github.com/Wei-N-Ning/gotypes/pkg/iterator/fs"
 	"github.com/Wei-N-Ning/gotypes/pkg/iterator/io"
-	"os"
-	"strings"
 )
 
 // This mini ack-clone is to demonstrate the performance advantage of ParMapUnordered.

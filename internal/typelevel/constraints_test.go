@@ -2,8 +2,9 @@ package typelevel
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type BigInteger uint64
@@ -39,6 +40,6 @@ func TestQuantizationII(t *testing.T) {
 	assert.Equal(t, "10", quantizationII(int64(10)))
 
 	// compile error! uint64 does not implement QuantizableII
-	//assert.Equal(t, "10", quantizationII(uint64(10)))
+	// assert.Equal(t, "10", quantizationII(uint64(10)))
 	assert.Equal(t, "10", quantizationII(BigInteger(10)))
 }

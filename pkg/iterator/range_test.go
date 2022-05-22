@@ -2,8 +2,9 @@ package iterator
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestRangeCount(t *testing.T) {

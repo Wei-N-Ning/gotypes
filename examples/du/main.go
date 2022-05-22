@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/Wei-N-Ning/gotypes/pkg/iterator"
 	"github.com/Wei-N-Ning/gotypes/pkg/iterator/fs"
-	"os"
 )
 
 func addTwo(lhs int64, rhs int64) int64 {
