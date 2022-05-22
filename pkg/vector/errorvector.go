@@ -1,6 +1,10 @@
 package vector
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/Wei-N-Ning/gotypes/pkg/option"
+)
 
 type ErrVector = Vector[error]
 
@@ -18,7 +22,15 @@ func AggregateError(errVector ErrVector, sep string) error {
 	if errVector.Empty() {
 		return nil
 	}
-	xs := Map(errVector, func(err error) string { return err.Error() })
+	xs := MapFilter(errVector, func(err error) option.Option[string] {
+		if err == nil {
+			return option.None[string]()
+		}
+		return option.Some[string](err.Error())
+	})
+	if xs.Empty() {
+		return nil
+	}
 	return AggregatedError{
 		inners: errVector,
 		sep:    sep,
