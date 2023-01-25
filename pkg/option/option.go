@@ -22,6 +22,14 @@ func (opt Option[T]) Unwrap() T {
 	return *opt.x
 }
 
+// UnwrapOr returns the wrapped value or the default value <defa>
+func (opt Option[T]) UnwrapOr(defa T) T {
+	if opt.x == nil {
+		return defa
+	}
+	return *opt.x
+}
+
 func (opt *Option[T]) Replace(x T) {
 	opt.x = &x
 }
