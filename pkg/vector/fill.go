@@ -15,3 +15,10 @@ func (vec *Vector[T]) FillRange(x T, from int, to int) {
 		vec.xs[idx] = x
 	}
 }
+
+// FillWith sets every element in the vector to f(x)
+func (vec *Vector[T]) FillWith(x T, f func(T) T) {
+	for idx := 0; idx < vec.Size(); idx++ {
+		vec.xs[idx] = f(x)
+	}
+}

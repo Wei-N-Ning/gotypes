@@ -46,3 +46,21 @@ func TestFillRange(t *testing.T) {
 		assert.Equal(t, []int{1, 2, 100, 100, 5, 6}, v.ToSlice())
 	})
 }
+
+func TestVector_FillWith(t *testing.T) {
+	t.Run("empty vector, expect no effect", func(t *testing.T) {
+		v := WithCapacity[int](4)
+		v.FillWith(100, func(x int) int { return x + 1 })
+		assert.Equal(t, []int{}, v.ToSlice())
+	})
+	t.Run("singleton vector", func(t *testing.T) {
+		v := FromValues(1)
+		v.FillWith(100, func(x int) int { return x + 1 })
+		assert.Equal(t, []int{101}, v.ToSlice())
+	})
+	t.Run("expect all elements with new value", func(t *testing.T) {
+		v := FromValues(1, 2, 3, 4, 5, 6)
+		v.FillWith(100, func(x int) int { return x + 1 })
+		assert.Equal(t, []int{101, 101, 101, 101, 101, 101}, v.ToSlice())
+	})
+}
